@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <title>Взять ипотеку или накопить?</title>
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/main.css">
+    </head>
+    <body>
+        <div class="container">
+            <h1>Ипотека или накопить?</h1>
+            <p>
+                Вы решили купить квартиру, но не знаете брать ипотеку или копить?<br>
+                У вас есть несколько вариантов:<br>
+            </p>
+            <ol>
+                <li>Жить на съемной квартире, платить за ее аренду и потихоньку откладывать N-ую сумму денег в банк или под матрас на покупку своей.</li>
+                <li>Купить квартиру в ипотеку, сразу перехать в нее и выплачивать деньги банку.</li>
+                <li>Найти клад, выиграть в лотерею, в казино поставить все на зеро и выиграть кучу бабок.</li>
+            </ol>
+            <p>
+                Вариант с покупкой квартиры в ипотеку в недостроенном доме я не рассматрию, так как считаю, что это весьма невыгодный вариант. Вам придется каждый месяц платить и по ипотеке и за аренду съемного жилья.
+            </p>
+            <p>
+                Данная программа поможет математически рассчитать какой из вариантов будет выгоднее. Брать ипотеку или копить-копить-копить.<br>
+                Это всего лишь математика, а решать вам.
+            </p>
+            <div class="mb-20"></div>
+
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="panel panel-default mortgage-input-data">
+                        <div class="panel-heading"><b>Введите данные</b></div>
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label title="Ежемесячная сумма, которую вы можете выделять на квартиру. Например, если вы решили откладывать по 30 000 руб./мес., и при этом снимаете квартиру за 15 000 руб., то сумма будет 45 000 руб.">
+                                    Сумма в месяц:
+                                    <span class="glyphicon glyphicon-question-sign"></span>
+                                </label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control js-input-sum" value="80000">
+                                    <span class="input-group-addon">руб.</span>
+                                </div>
+                                <div class="text-danger js-input-error"></div>
+                            </div>
+                            <div class="form-group">
+                                <label title="Стоимость аренды квартиры в месяц. Если вы живете в своей квартире, можете поставить 0 или стоимость коммунальных платежей.">
+                                    Аренда квартиры:
+                                    <span class="glyphicon glyphicon-question-sign"></span>
+                                </label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control js-input-rent" value="16000">
+                                    <span class="input-group-addon">руб.</span>
+                                </div>
+                                <div class="text-danger js-input-error"></div>
+                            </div>
+                            <div class="form-group">
+                                <label title="Если вы решили откладывать деньги на счет в банке, укажите процентную ставку по вкладу. Если храните деньги под матрасом, укажите 0.">
+                                    % по вкладу:
+                                    <span class="glyphicon glyphicon-question-sign"></span>
+                                </label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control js-input-deposit" value="7">
+                                    <span class="input-group-addon">%</span>
+                                </div>
+                                <div class="text-danger js-input-error"></div>
+                            </div>
+                            <div class="form-group">
+                                <label>% по ипотеке:</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control js-input-credit" value="12">
+                                    <span class="input-group-addon">%</span>
+                                </div>
+                                <div class="text-danger js-input-error"></div>
+                            </div>
+                            <div class="form-group">
+                                <label>
+                                    Стоимость квартиры:
+                                </label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control js-input-total" value="4500000">
+                                    <span class="input-group-addon">руб.</span>
+                                </div>
+                                <div class="text-danger js-input-error"></div>
+                            </div>
+                            <div class="form-group">
+                                <label>
+                                    Уже есть:
+                                </label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control js-input-exist" value="1000000">
+                                    <span class="input-group-addon">руб.</span>
+                                </div>
+                                <div class="text-danger js-input-error"></div>
+                            </div>
+                            <button class="btn btn-primary js-btn-calc">Рассчитать</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <h4>Результаты:</h4>
+                    <p>
+                        <b>Если Вы будете копить:</b><br>
+                        Вы накопите необходимую сумму за <b class="text-success js-statistics-deposit-months">0</b>.
+                        При этом переплата за аренду квартиры составит <b class=" text-success js-statistics-deposit-overpayment">0</b>
+                    </p>
+                    <p>
+                        <b>Если Вы возьмете ипотеку:</b><br>
+                        Вы выплатите ипотеку за <b class="text-info js-statistics-credit-months">0</b>.
+                        При этом переплата по процентам составит <b class="text-info js-statistics-credit-overpayment">0</b>
+                    </p>
+                    <div class="mb-20"></div>
+
+                    <h4>Все рассчеты:</h4>
+                    <div class="mortgage-table-head">
+                        <table class="table table-bordered mortgage-table">
+                            <colgroup>
+                                <col class="mortgage-table__col-number">
+                                <col class="mortgage-table__col-date">
+                                <col class="mortgage-table__col-deposit">
+                                <col class="mortgage-table__col-income">
+                                <col class="mortgage-table__col-credit">
+                                <col class="mortgage-table__col-percentage">
+                                <col class="mortgage-table__col-total-rent">
+                                <col class="mortgage-table__col-total-percentage">
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th>№</th>
+                                    <th>Дата</th>
+                                    <th>Вклад,<br><span class="mortgage-table__label">руб.</span></th>
+                                    <th>Доход по&nbsp;вкладу,<br><span class="mortgage-table__label">руб.</span></th>
+                                    <th>Ипотека,<br><span class="mortgage-table__label">руб.</span></th>
+                                    <th>% по&nbsp;ипотеке,<br><span class="mortgage-table__label">руб.</span></th>
+                                    <th>Переплата за&nbsp;аренду,<br><span class="mortgage-table__label">руб.</span></th>
+                                    <th>Переплата по&nbsp;ипотеке,<br><span class="mortgage-table__label">руб.</span></th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <table class="table table-bordered mortgage-table">
+                        <colgroup>
+                            <col class="mortgage-table__col-number">
+                            <col class="mortgage-table__col-date">
+                            <col class="mortgage-table__col-deposit">
+                            <col class="mortgage-table__col-income">
+                            <col class="mortgage-table__col-credit">
+                            <col class="mortgage-table__col-percentage">
+                            <col class="mortgage-table__col-total-rent">
+                            <col class="mortgage-table__col-total-percentage">
+                        </colgroup>
+                        <tbody class="js-mortgage-data">
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-20"></div>
+
+        <script src="js/lib/jquery-3.1.1.min.js"></script>
+        <script src="js/main.js"></script>
+    </body>
+</html>

@@ -1,0 +1,31 @@
+.mortgage-table-head {
+	background-color: #fff;
+}
+
+.mortgage-table-head.fixed {
+	position: fixed;
+	top: 0;
+	z-index: 10;
+}
+
+.mortgage-table {
+	table-layout: fixed;
+	margin-bottom: 0;
+}
+
+.mortgage-table th,
+.mortgage-table td {
+	text-align: right;
+	vertical-align: top !important;
+}
+
+.mortgage-table__col-number {width: 40px;}
+.mortgage-table__col-date {width: 100px;}
+
+.mortgage-table__label {
+	color: #999;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+.mb-20 {margin-bottom: 20px;}
