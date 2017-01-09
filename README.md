@@ -1,5 +1,5 @@
 # mortgage
-[Demo](https://leonidfeskov.github.io/mortgage/)
+[Demo](https://leonidfeskov.github.io/mortgage/index.html)
 
 ## Ипотека или накопить?
 Вы решили купить квартиру, но не знаете брать ипотеку или копить?
