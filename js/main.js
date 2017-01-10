@@ -17,8 +17,10 @@
         return n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1 ');
     }
 
-    function calcPercentage(sum, percent) {
-        return round(sum * percent / 100 / 12);
+    function calcPercentage(sum, percent, date) {
+        var daysPerMonth =  33 - new Date(date.getFullYear(), date.getMonth(), 33).getDate();
+        var daysPerYear = date.getFullYear() % 4 == 0 ? 366 : 365;
+        return round(sum * percent / 100 / daysPerYear * daysPerMonth);
     }
 
     function showError(input, message) {
@@ -39,6 +41,8 @@
         var total = parseFloat($('.js-input-total').val()) || 0;
         var exist = parseFloat($('.js-input-exist').val()) || 0;
 
+        var now = new Date();
+
         $('.mortgage-input-data .form-group').removeClass('has-error')
             .find('.js-input-error').hide();
 
@@ -55,7 +59,7 @@
             isValid = false;
         }
 
-        if (sum <= calcPercentage(total - exist, credit)) {
+        if (sum <= calcPercentage(total - exist, credit, now)) {
             showError($('.js-input-sum'), 'Вы не сможете платить ипотеку с такой суммой.');
             isValid = false;
         }
@@ -101,7 +105,6 @@
                 monthCount: 0
             }
         };
-        var now = new Date();
 
         var html = '';
 
@@ -111,9 +114,9 @@
         data[0].number = 1;
         data[0].date = now.getDate() + '.' + formatedMonth(now.getMonth() + 1) + '.' + now.getFullYear();
         data[0].deposit = exist;
-        data[0].income = calcPercentage(data[0].deposit, deposit);
+        data[0].income = calcPercentage(data[0].deposit, deposit, now);
         data[0].credit = total - exist;
-        data[0].percentage = calcPercentage(data[0].credit, credit);
+        data[0].percentage = calcPercentage(data[0].credit, credit, now);
         data[0].overRent = rent;
         data[0].overCredit = data[0].percentage;
 
@@ -136,11 +139,11 @@
 
             data[row].deposit = round(data[row - 1].deposit + data[row - 1].income + (sum - rent));
 
-            data[row].income = calcPercentage(data[row].deposit, deposit);
+            data[row].income = calcPercentage(data[row].deposit, deposit, nextMonth);
 
             data[row].credit = round(data[row - 1].credit - sum + data[row - 1].percentage);
 
-            data[row].percentage = calcPercentage(data[row].credit, credit);
+            data[row].percentage = calcPercentage(data[row].credit, credit, nextMonth);
 
             data[row].overRent = round(data[row - 1].overRent + rent);
 
