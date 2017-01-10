@@ -183,37 +183,39 @@
         $('.js-statistics-credit-overpayment').html(formatedPrice(statistics.credit.overpayment) + '&nbsp;руб.');
     }
 
-    calc();
+    $(function() {
+        calc();
 
-    $('.js-btn-calc').on('click', calc);
-    $('.js-input-sum, .js-input-rent, .js-input-deposit, .js-input-credit, .js-input-total, .js-input-exist').on('change', calc);
+        $('.js-btn-calc').on('click', calc);
+        $('.js-input-sum, .js-input-rent, .js-input-deposit, .js-input-credit, .js-input-total, .js-input-exist').on('change', calc);
 
-    var $tableHead = $('.mortgage-table-head');
-    var tableHead = {
-        pos: $tableHead.offset().top,
-        width: $tableHead.width(),
-        height: $tableHead.height(),
-        isFixed: false
-    };
+        var $tableHead = $('.mortgage-table-head');
+        var tableHead = {
+            pos: $tableHead.offset().top,
+            width: $tableHead.width(),
+            height: $tableHead.height(),
+            isFixed: false
+        };
 
-    $(window).scroll(function(e) {
-        var scrollTop = window.pageYOffset;
-        if (scrollTop >= tableHead.pos) {
-            $tableHead.addClass('fixed');
-            if (!tableHead.isFixed) {
-                $tableHead.width(tableHead.width);
-                $tableHead.before('<div class="mortgage-table-head-dummy" style="height: ' + tableHead.height + 'px"></div>');
-                tableHead.isFixed = true;
+        $(window).scroll(function(e) {
+            var scrollTop = window.pageYOffset;
+            if (scrollTop >= tableHead.pos) {
+                $tableHead.addClass('fixed');
+                if (!tableHead.isFixed) {
+                    $tableHead.width(tableHead.width);
+                    $tableHead.before('<div class="mortgage-table-head-dummy" style="height: ' + tableHead.height + 'px"></div>');
+                    tableHead.isFixed = true;
+                }
+            } else {
+                $tableHead.removeClass('fixed');
+                $('.mortgage-table-head-dummy').remove();
+                tableHead.isFixed = false;
             }
-        } else {
-            $tableHead.removeClass('fixed');
-            $('.mortgage-table-head-dummy').remove();
-            tableHead.isFixed = false;
-        }
-    });
+        });
 
-    $('[data-toggle="tooltip"]').tooltip({
-        container: 'body'
+        $('[data-toggle="tooltip"]').tooltip({
+            container: 'body'
+        });
     });
 
 })();
