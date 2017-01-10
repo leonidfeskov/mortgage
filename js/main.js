@@ -194,8 +194,7 @@
         width: $tableHead.width(),
         height: $tableHead.height(),
         isFixed: false
-    }
-
+    };
 
     $(window).scroll(function(e) {
         var scrollTop = window.pageYOffset;
@@ -211,6 +210,10 @@
             $('.mortgage-table-head-dummy').remove();
             tableHead.isFixed = false;
         }
+    });
+
+    $('[data-toggle="tooltip"]').tooltip({
+        container: 'body'
     });
 
 })();
