@@ -13,10 +13,6 @@
         return '0' + month;
     }
 
-    function formatedPrice(n) {
-        return n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1 ');
-    }
-
     function calcPercentage(sum, percent, date) {
         var daysPerMonth =  33 - new Date(date.getFullYear(), date.getMonth(), 33).getDate();
         var daysPerYear = date.getFullYear() % 4 == 0 ? 366 : 365;

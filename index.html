@@ -32,89 +32,13 @@
                     <div class="panel panel-default mortgage-input-data">
                         <div class="panel-heading"><b>Введите данные</b></div>
                         <div class="panel-body">
-                            <div class="form-group">
-                                <label data-toggle="tooltip"
-                                       data-placement="right"
-                                       title="Ежемесячная сумма, которую вы можете выделять на квартиру. Например, если вы решили откладывать по 30 000 руб./мес., и при этом снимаете квартиру за 15 000 руб., то сумма будет 45 000 руб.">
-                                    Сумма в месяц:
-                                    <span class="glyphicon glyphicon-question-sign"></span>
-                                </label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control js-input-sum" value="80000">
-                                    <span class="input-group-addon">руб.</span>
-                                </div>
-                                <div class="text-danger js-input-error"></div>
-                            </div>
-                            <div class="form-group">
-                                <label data-toggle="tooltip"
-                                       data-placement="right"
-                                       title="Стоимость аренды квартиры в месяц. Если вы живете в своей квартире, можете поставить 0 или стоимость коммунальных платежей.">
-                                    Аренда квартиры:
-                                    <span class="glyphicon glyphicon-question-sign"></span>
-                                </label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control js-input-rent" value="16000">
-                                    <span class="input-group-addon">руб.</span>
-                                </div>
-                                <div class="text-danger js-input-error"></div>
-                            </div>
-                            <div class="form-group">
-                                <label data-toggle="tooltip"
-                                       data-placement="right"
-                                       title="Если вы решили откладывать деньги на счет в банке, укажите процентную ставку по вкладу. Если храните деньги под матрасом, укажите 0.">
-                                    % по вкладу:
-                                    <span class="glyphicon glyphicon-question-sign"></span>
-                                </label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control js-input-deposit" value="7">
-                                    <span class="input-group-addon">%</span>
-                                </div>
-                                <div class="text-danger js-input-error"></div>
-                            </div>
-                            <div class="form-group">
-                                <label>% по ипотеке:</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control js-input-credit" value="12">
-                                    <span class="input-group-addon">%</span>
-                                </div>
-                                <div class="text-danger js-input-error"></div>
-                            </div>
-                            <div class="form-group">
-                                <label>
-                                    Стоимость квартиры:
-                                </label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control js-input-total" value="4500000">
-                                    <span class="input-group-addon">руб.</span>
-                                </div>
-                                <div class="text-danger js-input-error"></div>
-                            </div>
-                            <div class="form-group">
-                                <label>
-                                    Уже есть:
-                                </label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control js-input-exist" value="1000000">
-                                    <span class="input-group-addon">руб.</span>
-                                </div>
-                                <div class="text-danger js-input-error"></div>
-                            </div>
-                            <button class="btn btn-primary js-btn-calc">Рассчитать</button>
+                            <div class="js-panel"></div>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-9">
                     <h4>Результаты:</h4>
-                    <p>
-                        <b>Если Вы будете копить:</b><br>
-                        Вы накопите необходимую сумму за <b class="text-success js-statistics-deposit-months">0</b>.
-                        При этом переплата за аренду квартиры составит <b class=" text-success js-statistics-deposit-overpayment">0</b>
-                    </p>
-                    <p>
-                        <b>Если Вы возьмете ипотеку:</b><br>
-                        Вы выплатите ипотеку за <b class="text-info js-statistics-credit-months">0</b>.
-                        При этом переплата по процентам составит <b class="text-info js-statistics-credit-overpayment">0</b>
-                    </p>
+                    <div class="js-statistics"></div>
                     <div class="mb-20"></div>
 
                     <h4>Все рассчеты:</h4>
@@ -165,9 +89,7 @@
                             <col class="mortgage-table__col-total-rent">
                             <col class="mortgage-table__col-total-percentage">
                         </colgroup>
-                        <tbody class="js-mortgage-data">
-
-                        </tbody>
+                        <tbody class="js-table-data"></tbody>
                     </table>
                 </div>
             </div>
@@ -175,8 +97,49 @@
 
         <div class="mb-20"></div>
 
-        <script src="js/lib/jquery-3.1.1.min.js"></script>
-        <script src="bootstrap/js/bootstrap.min.js"></script>
-        <script src="js/main.js"></script>
+        <script src="js/lib/require.js" data-main="js/app"></script>
+
+        <script type="text/template" id="panel-item">
+            <div class="form-group">
+                <label data-toggle="tooltip"
+                       data-placement="right"
+                       <%= hint ? 'title="' + hint + '"' : '' %>>
+                    <%- label %>:
+                    <span class="glyphicon glyphicon-question-sign"></span>
+                </label>
+                <div class="input-group">
+                    <input type="text" name="<%- name %>" class="form-control js-input" value="<%- value %>">
+                    <span class="input-group-addon"><%- units %></span>
+                </div>
+                <div class="text-danger js-input-error"></div>
+            </div>
+        </script>
+
+        <script type="text/template" id="statistics">
+            <p>
+                <b>Если Вы будете копить:</b><br>
+                Вы накопите необходимую сумму за <b class="text-success"><%- monthsRent %>&nbsp;месяцев</b>.
+                При этом переплата за аренду квартиры составит <b class="text-success"><%- overRent %>&nbsp;руб.</b>
+            </p>
+            <p>
+                <b>Если Вы возьмете ипотеку:</b><br>
+                Вы выплатите ипотеку за <b class="text-info"><%- monthsCredit %>&nbsp;месяцев</b>.
+                При этом переплата по процентам составит <b class="text-info"><%- overCredit %>&nbsp;руб.</b>
+            </p>
+        </script>
+
+        <script type="text/template" id="table-row">
+            <tr>
+                <td><%- number %></td>
+                <td><%- date %></td>
+                <td><%- deposit %></td>
+                <td><%- income %></td>
+                <td><%- credit %></td>
+                <td><%- percentage %></td>
+                <td><%- overRent %></td>
+                <td><%- overCredit %></td>
+            </tr>
+        </script>
+
     </body>
 </html>
