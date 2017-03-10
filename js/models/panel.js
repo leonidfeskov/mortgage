@@ -1,47 +1,96 @@
 define([
     'jquery',
-    'backbone'
+    'backbone',
+    'utils/urlParse',
+    'utils/calcPercentage'
 ], function(
     $,
-    Backbone
+    Backbone,
+    urlParse,
+    calcPercentage
 ) {
+    var sum = urlParse.getUrlParameter('sum') ? parseInt(urlParse.getUrlParameter('sum')) : 80000;
+    var rent = urlParse.getUrlParameter('rent') !== null ? parseInt(urlParse.getUrlParameter('rent')) : 16000;
+    var deposit = urlParse.getUrlParameter('deposit') !== null ? parseFloat(urlParse.getUrlParameter('deposit')) : 7;
+    var credit = urlParse.getUrlParameter('credit') !== null ? parseFloat(urlParse.getUrlParameter('credit')) : 12;
+    var total = urlParse.getUrlParameter('total') !== null ? parseInt(urlParse.getUrlParameter('total')) : 4500000;
+    var exist = urlParse.getUrlParameter('exist') !== null ? parseInt(urlParse.getUrlParameter('exist')) : 1000000;
+
     var Panel = Backbone.Model.extend({
         defaults: {
             sum: {
                 label: 'Сумма в месяц',
-                value: 80000,
+                value: sum,
                 units: 'руб.',
                 hint: ''
             },
             rent: {
                 label: 'Аренда квартиры',
-                value: 16000,
+                value: rent,
                 units: 'руб.',
                 hint: ''
             },
             deposit: {
                 label: '% по вкладу',
-                value: 7,
+                value: deposit,
                 units: '%',
                 hint: ''
             },
             credit: {
                 label: '% по ипотеке',
-                value: 12,
+                value: credit,
                 units: '%',
                 hint: ''
             },
             total: {
                 label: 'Стоимость квартиры',
-                value: 4500000,
+                value: total,
                 units: 'руб.',
                 hint: ''
             },
             exist: {
                 label: 'Уже есть',
-                value: 1000000,
+                value: exist,
                 units: 'руб.',
                 hint: ''
+            }
+        },
+
+        validate: function(attrs, options) {
+            var errors = {};
+            var now = new Date();
+
+            if (attrs.sum.value < 5000) {
+                errors.sum = 'Откладывайте хотя бы по&nbsp;5&nbsp;000&nbsp;руб.';
+            }
+
+            if (attrs.sum.value - attrs.rent.value < 5000) {
+                errors.sum = 'Сумма не может быть меньше аренды квартиры.';
+                errors.rent = 'Аренда не может быть больше общей суммы в месяц.';
+            }
+
+            if (attrs.sum.value <= calcPercentage(total - exist, credit, now)) {
+                errors.sum = 'Вы не сможете платить ипотеку с такой суммой.';
+            }
+
+            if (attrs.sum.deposit < 0 || attrs.sum.deposit > 100) {
+                errors.deposit = 'Введите число от 0 до 100.';
+            }
+
+            if (attrs.sum.credit < 0 || attrs.sum.credit > 100) {
+                errors.credit = 'Введите число от 0 до 100.';
+            }
+
+            if (attrs.sum.total < 500000) {
+                errors.total = 'Какая-то дешевенькая квартира.';
+            }
+
+            if (attrs.sum.exist < 0) {
+                errors.exist = 'Не может быть отрицательное число.';
+            }
+
+            if (!$.isEmptyObject(errors)) {
+                return errors;
             }
         }
     });

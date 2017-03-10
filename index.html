@@ -100,7 +100,7 @@
         <script src="js/lib/require.js" data-main="js/app"></script>
 
         <script type="text/template" id="panel-item">
-            <div class="form-group">
+            <div class="form-group js-form-group" data-name="<%- name %>">
                 <label data-toggle="tooltip"
                        data-placement="right"
                        <%= hint ? 'title="' + hint + '"' : '' %>>

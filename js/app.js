@@ -52,6 +52,9 @@ require([
     new tableView({model: Table});
 
     Panel.on('change', function() {
+        if (Panel.isValid()) {
+            $('.js-input-error').empty();
+        }
         var data = this.toJSON();
         var userData = {
             sum: data.sum.value,
@@ -59,12 +62,23 @@ require([
             deposit: data.deposit.value,
             credit: data.credit.value,
             total: data.total.value,
-            exist: data.exist.value,
-        }
+            exist: data.exist.value
+        };
+        var urlParams = '?sum='+userData.sum + '&rent='+userData.rent + '&deposit='+userData.deposit +
+            '&credit='+userData.credit + '&total='+userData.total + '&exist='+userData.exist;
+        history.pushState(userData, '', urlParams);
         var calcData = calc(userData);
 
         Statistics.set(calcData.statistics);
         Table.set('table', calcData.table);
+    });
+
+    Panel.on('invalid', function(model, error) {
+        console.log(error);
+
+        for (var key in error) {
+            $('.js-form-group[data-name="' + key + '"] .js-input-error').text(error[key]);
+        }
     });
 
     Panel.trigger('change');

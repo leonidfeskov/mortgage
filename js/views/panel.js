@@ -5,8 +5,7 @@ define([
 ], function(
     $,
     _,
-    Backbone,
-    calc
+    Backbone
 ) {
     var PanelView = Backbone.View.extend({
         el: $('.js-panel'),
@@ -35,7 +34,7 @@ define([
 
         setValue: function(e) {
             var name = e.target.name;
-            this.model.set(name, {value: parseInt(e.target.value)});
+            this.model.set(name, {value: parseInt(e.target.value)}, {validate:true});
         }
     });
 
