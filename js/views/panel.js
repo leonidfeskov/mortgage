@@ -34,7 +34,7 @@ define([
 
         setValue: function(e) {
             var name = e.target.name;
-            this.model.set(name, {value: parseInt(e.target.value)}, {validate:true});
+            this.model.set(name, {value: parseFloat(e.target.value)}, {validate:true});
         }
     });
 

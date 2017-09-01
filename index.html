@@ -102,10 +102,11 @@
         <script type="text/template" id="panel-item">
             <div class="form-group js-form-group" data-name="<%- name %>">
                 <label data-toggle="tooltip"
-                       data-placement="right"
-                       <%= hint ? 'title="' + hint + '"' : '' %>>
+                       data-placement="right">
                     <%- label %>:
-                    <span class="glyphicon glyphicon-question-sign"></span>
+                    <% if (hint) { %>
+                    <span class="glyphicon glyphicon-question-sign" title="<%- hint %>"></span>
+                    <% } %>
                 </label>
                 <div class="input-group">
                     <input type="text" name="<%- name %>" class="form-control js-input" value="<%- value %>">
